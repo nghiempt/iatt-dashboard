@@ -23,83 +23,8 @@ const ProductPage = () => {
     images: [] as string[],
   });
 
-  const apiUrl = "https://n8n.khiemfle.com/webhook/5c404ea1-4a57-4c0a-8628-3088d00abe64";
+  const apiUrl = "https://n8n.khiemfle.com/webhook/4b9e3022-2e51-4650-8431-11501cfee90c";
   const categories = ['In Ảnh Plastic', 'Khung Ảnh', 'Album', 'Photobook'];
-
-  const productList: Product[] = [
-    {
-      row: 1,
-      id: 1,
-      name: "Ảnh Ép Plastic",
-      category: "In ảnh Plastic",
-      price: 129000,
-      description: "Ảnh ép plastic chất lượng cao, bền và đẹp.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728991261/iatt/IMG_7646_eojjmi.jpg"]
-    },
-    {
-      row: 2,
-      id: 2,
-      name: "3D 4K",
-      category: "In ảnh Plastic",
-      price: 129000,
-      description: "In ảnh 3D 4K sống động, tạo chiều sâu cho hình ảnh.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728994314/iatt/IMG_7583_rlk2is.jpg"]
-    },
-    {
-      row: 3,
-      id: 3,
-      name: "Đĩa Xoay",
-      category: "In ảnh Plastic",
-      price: 129000,
-      description: "Ảnh trên đĩa xoay độc đáo, thích hợp để trưng bày.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728994420/iatt/IMG_7599_sgiwq0.jpg"]
-    },
-    {
-      row: 4,
-      id: 4,
-      name: "HD 4K",
-      category: "In ảnh Plastic",
-      price: 129000,
-      description: "Ảnh HD 4K sắc nét, chi tiết rõ ràng.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728994618/iatt/IMG_7608_vxzprx.jpg"]
-    },
-    {
-      row: 5,
-      id: 5,
-      name: "Khung Để Bàn",
-      category: "Khung ảnh",
-      price: 129000,
-      description: "Khung ảnh để bàn tiện dụng, phù hợp với mọi không gian.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728994834/iatt/IMG_7630_nqibet.jpg"]
-    },
-    {
-      row: 6,
-      id: 6,
-      name: "Khung Hoa Văn",
-      category: "Khung ảnh",
-      price: 129000,
-      description: "Khung ảnh hoa văn tinh tế, làm nổi bật hình ảnh.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728994946/iatt/IMG_7585_dhs3oq.jpg"]
-    },
-    {
-      row: 7,
-      id: 7,
-      name: "Khung Titan A1",
-      category: "Khung ảnh",
-      price: 129000,
-      description: "Khung Titan A1 bền bỉ và sang trọng.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728995128/iatt/IMG_7618_oxd8ut.jpg"]
-    },
-    {
-      row: 8,
-      id: 8,
-      name: "Khung Titan A2",
-      category: "Khung ảnh",
-      price: 129000,
-      description: "Khung Titan A2 với thiết kế hiện đại, tinh tế.",
-      images: ["https://res.cloudinary.com/farmcode/image/upload/v1728995381/iatt/IMG_7623_l6qxyh.jpg"]
-    }
-  ];  
 
   const handleOpenCreateModal = () => {
     setIsCreateModalOpen(true);
@@ -162,30 +87,30 @@ const ProductPage = () => {
   const handleCreateProduct = async () => {
     setIsSaving(true);
     try {
-    //   const uploadedImageUrls = await uploadImagesToCloudinary(localImages);
-    //   const newId = Math.max(...products.map((p) => p.id), 0) + 1;
-    //   const raw = JSON.stringify({
-    //     method: "CREATE",
-    //     id: newId,
-    //     name: newProduct.name,
-    //     price: newProduct.price,
-    //     description: newProduct.description,
-    //     category: newProduct.category,
-    //     i_one: uploadedImageUrls[0] || "",
-    //     i_two: uploadedImageUrls[1] || "",
-    //     i_three: uploadedImageUrls[2] || "",
-    //     i_four: uploadedImageUrls[3] || "",
-    //     i_five: uploadedImageUrls[4] || "",
-    //     i_six: uploadedImageUrls[5] || "",
-    //   });
-    //   await createProduct(raw);
-    //   await fetchProducts();
+        const uploadedImageUrls = await uploadImagesToCloudinary(localImages);
+        const newId = Math.max(...products.map((p) => p.id), 0) + 1;
+        const raw = JSON.stringify({
+          method: "CREATE",
+          id: newId,
+          name: newProduct.name,
+          price: newProduct.price,
+          description: newProduct.description,
+          category: newProduct.category,
+          i_one: uploadedImageUrls[0] || "",
+          i_two: uploadedImageUrls[1] || "",
+          i_three: uploadedImageUrls[2] || "",
+          i_four: uploadedImageUrls[3] || "",
+          i_five: uploadedImageUrls[4] || "",
+          i_six: uploadedImageUrls[5] || "",
+        });
+        await createProduct(raw);
+        await fetchProducts();
       setNewProduct({ name: "", price: 0, description: "", category: "", images: [] });
       setLocalImages([]);
       setIsSaving(false);
       handleCloseCreateModal();
       setIsLoading(true);
-    //   await fetchProducts();
+        await fetchProducts();
     } catch (error) {
       console.error("Error creating product:", error);
       alert("Failed to create product");
@@ -214,6 +139,8 @@ const ProductPage = () => {
   };
 
   const handleCloseCreateModal = () => {
+    setNewProduct({ name: "", price: 0, description: "", category: "", images: [] });
+    setLocalImages([]);
     setIsCreateModalOpen(false);
   };
 
@@ -226,46 +153,44 @@ const ProductPage = () => {
   const handleUpdateProduct = async () => {
     if (!selectedProduct) return;
     setIsSaving(true);
-    // const existingImageUrls = images.filter((img) => !img.startsWith("data:image"));
-    // const uploadedImageUrls = await uploadImagesToCloudinary(localImages);
-    // const allImageUrls = [...existingImageUrls, ...uploadedImageUrls];
-    // const raw = JSON.stringify({
-    //   method: "UPDATE",
-    //   row_number: selectedProduct.row_number,
-    //   id: selectedProduct.id,
-    //   name: selectedProduct.name,
-    //   price: selectedProduct.price,
-    //   description: selectedProduct.description,
-    //   category: selectedProduct.category,
-    //   i_one: allImageUrls[0] || "",
-    //   i_two: allImageUrls[1] || "",
-    //   i_three: allImageUrls[2] || "",
-    //   i_four: allImageUrls[3] || "",
-    //   i_five: allImageUrls[4] || "",
-    //   i_six: allImageUrls[5] || ""
-    // });
-    // const myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw,
-    //   redirect: "follow" as RequestRedirect
-    // };
+    const existingImageUrls = images.filter((img) => !img.startsWith("data:image"));
+    const uploadedImageUrls = await uploadImagesToCloudinary(localImages);
+    const allImageUrls = [...existingImageUrls, ...uploadedImageUrls];
+    const raw = JSON.stringify({
+      method: "UPDATE",
+      row_number: selectedProduct.row_number,
+      id: selectedProduct.id,
+      name: selectedProduct.name,
+      price: selectedProduct.price,
+      description: selectedProduct.description,
+      category: selectedProduct.category,
+      i_one: allImageUrls[0] || "",
+      i_two: allImageUrls[1] || "",
+      i_three: allImageUrls[2] || "",
+      i_four: allImageUrls[3] || "",
+      i_five: allImageUrls[4] || "",
+      i_six: allImageUrls[5] || ""
+    });
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow" as RequestRedirect
+    };
     try {
-    //   const response = await fetch(
-    //     "https://n8n.khiemfle.com/webhook/5c404ea1-4a57-4c0a-8628-3088d00abe64",
-    //     requestOptions
-    //   );
-    //   if (!response.ok) {
-    //     throw new Error("Failed to update product");
-    //   }
+      const response = await fetch(apiUrl, requestOptions
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update product");
+      }
       setLocalImages([]);
-    //   setImages(uploadedImageUrls);
+      setImages(uploadedImageUrls);
       setIsSaving(false);
       handleCloseUpdateModal();
       setIsLoading(true);
-    //   await fetchProducts();
+      await fetchProducts();
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to update product");
@@ -283,30 +208,30 @@ const ProductPage = () => {
     if (confirm) {
       if (!selectedProduct) return;
       setIsDelete(true);
-    //   const raw = JSON.stringify({
-    //     method: "DELETE",
-    //     row_number: selectedProduct.row
-    //   });
-    //   const myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
-    //   const requestOptions = {
-    //     method: "POST",
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: "follow" as RequestRedirect
-    //   };
+        const raw = JSON.stringify({
+          method: "DELETE",
+          row_number: selectedProduct.row
+        });
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow" as RequestRedirect
+        };
       try {
-        // const response = await fetch(
-        //   "https://n8n.khiemfle.com/webhook/5c404ea1-4a57-4c0a-8628-3088d00abe64",
-        //   requestOptions
-        // );
-        // if (!response.ok) {
-        //   throw new Error("Failed to delete product");
-        // }
+        const response = await fetch(
+          apiUrl,
+          requestOptions
+        );
+        if (!response.ok) {
+          throw new Error("Failed to delete product");
+        }
         setIsDelete(false);
         handleCloseUpdateModal();
         setIsLoading(true);
-        // await fetchProducts();
+        await fetchProducts();
       } catch (error) {
         console.error("Error:", error);
         alert("Failed to delete product");
@@ -316,7 +241,7 @@ const ProductPage = () => {
 
   const fetchProducts = async () => {
     try {
-      const data = await getAll("https://n8n.khiemfle.com/webhook/5c404ea1-4a57-4c0a-8628-3088d00abe64");
+      const data = await getAll(apiUrl);
       const transformedProducts: Product[] = data.map((item: any) => ({
         row: item.row_number,
         id: item.id,
@@ -343,31 +268,30 @@ const ProductPage = () => {
   };
 
   useEffect(() => {
-    // fetchProducts();
-    setProducts(productList);
+    fetchProducts();
   }, []);
 
-//   const SkeletonProduct = () => {
-//     return (
-//       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5 animate-pulse">
-//         <div className="col-span-3 flex items-center pr-24">
-//           <div className="grid grid-cols-4 gap-4 items-center">
-//             <div className="col-span-1 aspect-square bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
-//             <div className="col-span-3 h-4 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
-//           </div>
-//         </div>
-//         <div className="col-span-2 hidden items-center sm:flex">
-//           <div className="h-4 w-1/2 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
-//         </div>
-//         <div className="col-span-2 flex items-center">
-//           <div className="h-4 w-1/3 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
-//         </div>
-//         <div className="col-span-1 flex items-center">
-//           <div className="h-4 w-1/4 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
-//         </div>
-//       </div>
-//     );
-//   };
+  const SkeletonProduct = () => {
+    return (
+      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5 animate-pulse">
+        <div className="col-span-3 flex items-center pr-24">
+          <div className="grid grid-cols-4 gap-4 items-center">
+            <div className="col-span-1 aspect-square bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+            <div className="col-span-3 h-4 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
+          </div>
+        </div>
+        <div className="col-span-2 hidden items-center sm:flex">
+          <div className="h-4 w-1/2 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
+        </div>
+        <div className="col-span-2 flex items-center">
+          <div className="h-4 w-1/3 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
+        </div>
+        <div className="col-span-1 flex items-center">
+          <div className="h-4 w-1/4 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
+        </div>
+      </div>
+    );
+  };
 
   const newLocal = "col-span-1 flex items-center";
   return (
@@ -396,13 +320,12 @@ const ProductPage = () => {
           <p className="font-medium">Mô tả</p>
         </div>
       </div>
-      {/* {isLoading ? (
+      {isLoading ? (
         Array.from({ length: 6 }).map((_, index) => (
           <SkeletonProduct key={index} />
         ))
       ) : (
-        products.map((product: Product) => ( */}
-        {products.map((product: Product) => (
+        products.map((product: Product) => (
           <div
             className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5 cursor-pointer hover:bg-gray-50"
             key={product.id}
@@ -439,15 +362,12 @@ const ProductPage = () => {
               </p>
             </div>
           </div>
-        ))}
-        {/* ))
-      )} */}
+        ))
+      )}
       {isCreateModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center mt-15">
           <div className="bg-white p-6 rounded-lg w-1/3">
             <h2 className="text-xl font-semibold mb-6">Tạo Sản Phẩm</h2>
-
-            {/* Name Input */}
             <textarea
               name="name"
               placeholder="Tên sản phẩm"
@@ -455,8 +375,6 @@ const ProductPage = () => {
               onChange={handleInputChange}
               className="w-full mb-2 px-3 py-2 border rounded-lg text-sm h-[80px]"
             />
-
-            {/* Category Select */}
             <select
               name="category"
               value={newProduct.category}
@@ -470,8 +388,6 @@ const ProductPage = () => {
                 </option>
               ))}
             </select>
-
-            {/* Price Input */}
             <input
               name="price"
               type="number"
@@ -480,8 +396,6 @@ const ProductPage = () => {
               onChange={handleInputChange}
               className="w-full mb-4 px-3 py-2 border rounded-lg"
             />
-
-            {/* Description Input */}
             <textarea
               name="description"
               placeholder="Mô tả"
@@ -490,8 +404,6 @@ const ProductPage = () => {
               className="w-full mb-2 px-3 py-2 border rounded-lg text-sm"
               rows={5}
             />
-
-            {/* Image Upload */}
             <input
               type="file"
               multiple
@@ -499,8 +411,6 @@ const ProductPage = () => {
               onChange={handleImageUpload}
               className="w-full mb-4 px-3 py-2 border rounded-lg"
             />
-
-            {/* Display Selected Images */}
             <div className="grid grid-cols-6 gap-2 mb-4">
               {localImages.map((image, index) => (
                 <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
@@ -512,8 +422,6 @@ const ProductPage = () => {
                 </div>
               ))}
             </div>
-
-            {/* Action Buttons */}
             <div className="flex justify-end gap-4.5">
               <button
                 className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
