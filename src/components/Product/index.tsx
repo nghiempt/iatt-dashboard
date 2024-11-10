@@ -15,6 +15,7 @@ const ProductPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null as any);
   const [images, setImages] = useState<string[]>([]);
   const [localImages, setLocalImages] = useState<File[]>([]);
+  const [selectedColor, setSelectedColor] = useState('');
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: 0,
@@ -87,30 +88,30 @@ const ProductPage = () => {
   const handleCreateProduct = async () => {
     setIsSaving(true);
     try {
-        const uploadedImageUrls = await uploadImagesToCloudinary(localImages);
-        const newId = Math.max(...products.map((p) => p.id), 0) + 1;
-        const raw = JSON.stringify({
-          method: "CREATE",
-          id: newId,
-          name: newProduct.name,
-          price: newProduct.price,
-          description: newProduct.description,
-          category: newProduct.category,
-          i_one: uploadedImageUrls[0] || "",
-          i_two: uploadedImageUrls[1] || "",
-          i_three: uploadedImageUrls[2] || "",
-          i_four: uploadedImageUrls[3] || "",
-          i_five: uploadedImageUrls[4] || "",
-          i_six: uploadedImageUrls[5] || "",
-        });
-        await createProduct(raw);
-        await fetchProducts();
+      const uploadedImageUrls = await uploadImagesToCloudinary(localImages);
+      const newId = Math.max(...products.map((p) => p.id), 0) + 1;
+      const raw = JSON.stringify({
+        method: "CREATE",
+        id: newId,
+        name: newProduct.name,
+        price: newProduct.price,
+        description: newProduct.description,
+        category: newProduct.category,
+        i_one: uploadedImageUrls[0] || "",
+        i_two: uploadedImageUrls[1] || "",
+        i_three: uploadedImageUrls[2] || "",
+        i_four: uploadedImageUrls[3] || "",
+        i_five: uploadedImageUrls[4] || "",
+        i_six: uploadedImageUrls[5] || "",
+      });
+      await createProduct(raw);
+      await fetchProducts();
       setNewProduct({ name: "", price: 0, description: "", category: "", images: [] });
       setLocalImages([]);
       setIsSaving(false);
       handleCloseCreateModal();
       setIsLoading(true);
-        await fetchProducts();
+      await fetchProducts();
     } catch (error) {
       console.error("Error creating product:", error);
       alert("Failed to create product");
@@ -208,18 +209,18 @@ const ProductPage = () => {
     if (confirm) {
       if (!selectedProduct) return;
       setIsDelete(true);
-        const raw = JSON.stringify({
-          method: "DELETE",
-          row_number: selectedProduct.row
-        });
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        const requestOptions = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw,
-          redirect: "follow" as RequestRedirect
-        };
+      const raw = JSON.stringify({
+        method: "DELETE",
+        row_number: selectedProduct.row
+      });
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow" as RequestRedirect
+      };
       try {
         const response = await fetch(
           apiUrl,
@@ -366,7 +367,7 @@ const ProductPage = () => {
       )}
       {isCreateModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center mt-15">
-          <div className="bg-white p-6 rounded-lg w-1/3">
+          <div className="bg-white p-6 rounded-lg w-1/3 max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-semibold mb-6">Tạo Sản Phẩm</h2>
             <textarea
               name="name"
@@ -422,6 +423,91 @@ const ProductPage = () => {
                 </div>
               ))}
             </div>
+
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">Màu sắc</h3>
+              <div className="overflow-x-auto whitespace-nowrap py-2">
+                <div className="inline-flex gap-4 pl-5">
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-red-500 transition-all duration-300 ${selectedColor === 'red' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('red')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-blue-500 transition-all duration-300 ${selectedColor === 'blue' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('blue')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-yellow-500 transition-all duration-300 ${selectedColor === 'yellow' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('yellow')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-green-500 transition-all duration-300 ${selectedColor === 'green' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('green')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-purple-500 transition-all duration-300 ${selectedColor === 'purple' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('purple')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-orange-500 transition-all duration-300 ${selectedColor === 'orange' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('orange')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-teal-500 transition-all duration-300 ${selectedColor === 'teal' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('teal')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-pink-500 transition-all duration-300 ${selectedColor === 'pink' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('pink')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-indigo-500 transition-all duration-300 ${selectedColor === 'indigo' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('indigo')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-gray-500 transition-all duration-300 ${selectedColor === 'gray' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('gray')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-lime-500 transition-all duration-300 ${selectedColor === 'lime' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('lime')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-cyan-500 transition-all duration-300 ${selectedColor === 'cyan' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('cyan')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-violet-500 transition-all duration-300 ${selectedColor === 'violet' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('violet')}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">Chất liệu</h3>
+              <label className="block">
+                <input type="checkbox" /> Gỗ
+              </label>
+              <label className="block">
+                <input type="checkbox" /> Kim loại
+              </label>
+              <label className="block">
+                <input type="checkbox" /> Nhựa
+              </label>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">Kích thước</h3>
+              <label className="block">
+                <input type="checkbox" /> Nhỏ
+              </label>
+              <label className="block">
+                <input type="checkbox" /> Vừa
+              </label>
+              <label className="block">
+                <input type="checkbox" /> Lớn
+              </label>
+            </div>
+
             <div className="flex justify-end gap-4.5">
               <button
                 className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
@@ -442,7 +528,7 @@ const ProductPage = () => {
       )}
       {isUpdateModalOpen && selectedProduct && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center mt-15">
-          <div className="bg-white p-6 rounded-lg w-1/3">
+          <div className="bg-white p-6 rounded-lg w-1/3 max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-semibold mb-6">Chỉnh Sửa Sản Phẩm</h2>
             <div className="grid grid-cols-6 gap-2 mb-4">
               {images.map((image: string, index: number) => (
@@ -468,6 +554,91 @@ const ProductPage = () => {
             </select>
             <input type="number" value={selectedProduct?.price} onChange={(e) => setSelectedProduct({ ...selectedProduct, price: +e.target.value })} className="w-full mb-4 px-3 py-2 border rounded-lg text-sm" />
             <textarea defaultValue={selectedProduct?.description} onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e.target.value })} className="w-full mb-4 px-3 py-2 border rounded-lg text-sm" rows={5} />
+            
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">Màu sắc</h3>
+              <div className="overflow-x-auto whitespace-nowrap py-2">
+                <div className="inline-flex gap-4 pl-5">
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-red-500 transition-all duration-300 ${selectedColor === 'red' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('red')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-blue-500 transition-all duration-300 ${selectedColor === 'blue' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('blue')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-yellow-500 transition-all duration-300 ${selectedColor === 'yellow' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('yellow')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-green-500 transition-all duration-300 ${selectedColor === 'green' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('green')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-purple-500 transition-all duration-300 ${selectedColor === 'purple' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('purple')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-orange-500 transition-all duration-300 ${selectedColor === 'orange' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('orange')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-teal-500 transition-all duration-300 ${selectedColor === 'teal' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('teal')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-pink-500 transition-all duration-300 ${selectedColor === 'pink' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('pink')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-indigo-500 transition-all duration-300 ${selectedColor === 'indigo' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('indigo')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-gray-500 transition-all duration-300 ${selectedColor === 'gray' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('gray')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-lime-500 transition-all duration-300 ${selectedColor === 'lime' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('lime')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-cyan-500 transition-all duration-300 ${selectedColor === 'cyan' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('cyan')}
+                  />
+                  <label
+                    className={`cursor-pointer w-8 h-8 rounded-full bg-violet-500 transition-all duration-300 ${selectedColor === 'violet' ? 'scale-125' : ''}`}
+                    onClick={() => setSelectedColor('violet')}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">Chất liệu</h3>
+              <label className="block">
+                <input type="checkbox" checked/> Gỗ
+              </label>
+              <label className="block">
+                <input type="checkbox" /> Kim loại
+              </label>
+              <label className="block">
+                <input type="checkbox" /> Nhựa
+              </label>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">Kích thước</h3>
+              <label className="block">
+                <input type="checkbox" /> Nhỏ
+              </label>
+              <label className="block">
+                <input type="checkbox" /> Vừa
+              </label>
+              <label className="block">
+                <input type="checkbox" checked/> Lớn
+              </label>
+            </div>
+
             <div className="flex justify-between gap-4.5">
               <button className="flex justify-center rounded border border-stroke px-6 py-2 bg-red-500 hover:bg-opacity-90 font-medium text-gray" onClick={handleDeleteProduct}>
                 {isDelete ? "Đang xóa..." : "Xóa"}
